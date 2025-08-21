@@ -9,7 +9,7 @@ jobs:
     uses: pulidovpe/reusable-workflows/.github/workflows/oidc-setup.yml@main
     with:
       aws_account_id: ${{ vars.AWS_ACCOUNT_ID }}
-      repo_name: 'pulidovpe/testing-reusable-workflows'  # El repo que llama
+      repo_name: 'pulidovpe/technical-test-aws'  # El repo que al que se autoriza
       role_name: 'oidc-github-actions-role'
       actions: '["ec2:*","s3:*"]'
       aws_region: 'us-east-1'
