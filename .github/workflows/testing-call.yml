@@ -6,7 +6,6 @@ on:
 
 jobs:
   setup-oidc:
-    environment: prod
     uses: pulidovpe/reusable-workflows/.github/workflows/oidc-setup.yml@main
     with:
       aws-account-id: ${{ vars.AWS_ACCOUNT_ID }}
@@ -19,7 +18,6 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   
   prueba-acceso-aws:
-    environment: prod
     needs: setup-oidc
     runs-on: ubuntu-latest
     permissions:
