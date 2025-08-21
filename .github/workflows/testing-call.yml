@@ -8,11 +8,11 @@ jobs:
   setup-oidc:
     uses: pulidovpe/reusable-workflows/.github/workflows/oidc-setup.yml@main
     with:
-      aws-account-id: ${{ vars.AWS_ACCOUNT_ID }}
-      repo-name: 'pulidovpe/testing-reusable-workflows'  # El repo que llama
-      role-name: 'oidc-github-actions-role'
-      permissions-policy: '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Action":["ec2:*","s3:*"],"Resource":"*"}]}'  # permisos
-      aws-region: 'us-east-1'
+      aws_account_id: ${{ vars.AWS_ACCOUNT_ID }}
+      repo_name: 'pulidovpe/testing-reusable-workflows'  # El repo que llama
+      role_name: 'oidc-github-actions-role'
+      actions: '["ec2:*","s3:*"]'
+      aws_region: 'us-east-1'
     secrets:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -30,7 +30,7 @@ jobs:
       - name: Configure AWS Credentials con OIDC (usando IdP)
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ needs.setup-oidc.outputs.role-arn }}
+          role-to-assume: ${{ needs.setup-oidc.outputs.role_arn }}
           role-session-name: 'terraform-deploy-session'
           aws-region: 'us-east-1'
 
