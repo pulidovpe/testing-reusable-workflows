@@ -8,7 +8,7 @@ jobs:
   setup-oidc:
     uses: pulidovpe/reusable-workflows/.github/workflows/oidc-setup.yml@main
     with:
-      ##aws_account_id: ${{ vars.AWS_ACCOUNT_ID }}
+      aws_account_id: ${{ vars.AWS_ACCOUNT_ID }}
       repo_names: '["pulidovpe/testing-reusable-workflows", "pulidovpe/technical-test-aws"]'  # Lista completa!
       role_name_prefix: 'reusable-workflows-role'  # Nuevo nombre del role
       oidc_actions: "*"  # Acciones permitidas para OIDC (branches/tags)
@@ -17,6 +17,15 @@ jobs:
     secrets:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  
+  debug-outputs:
+    runs-on: ubuntu-latest
+    needs: setup-oidc
+    steps:
+      - name: Mostrar outputs
+        run: |
+          echo "OIDC Provider ARN: ${{ needs.setup-oidc.outputs.oidc_provider_arn }}"
+          echo "Roles ARN: ${{ needs.setup-oidc.outputs.github_roles_arn }}"
   
   prueba-acceso-aws:
     needs: setup-oidc
