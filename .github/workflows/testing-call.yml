@@ -4,6 +4,10 @@ on:
   workflow_dispatch:
     branches: [main]
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   setup-oidc:
     uses: pulidovpe/reusable-workflows/.github/workflows/oidc-setup.yml@main
