@@ -33,7 +33,7 @@ jobs:
       - name: Mostrar outputs
         run: |
           echo "OIDC Provider ARN: ${{ needs.setup-oidc.outputs.oidc_provider_arn }}"
-          echo "Roles ARN: ${{ needs.setup-oidc.outputs.github_roles_arn }}"
+          echo "Roles ARN: ${{ needs.setup-oidc.outputs.github_role_arn }}"
   
   prueba-acceso-aws:
     needs: setup-oidc
