@@ -45,19 +45,23 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Configure AWS Credentials con OIDC (usando IdP)
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: ${{ needs.setup-oidc.outputs.role_arn }}
-          role-session-name: ${{ github.repository }}-${{ github.run_id }}
-          aws-region: 'us-east-1'
-
       - name: Install-aws-cli-action
         id: install-aws-cli
         uses: unfor19/install-aws-cli-action@master
         with:
-          version: 2
-    
+          version: 2  
+
+      - name: Configure AWS Credentials con OIDC (usando IdP)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ needs.setup-oidc.outputs.github_role_arn }}
+          role-session-name: ${{ github.repository }}-${{ github.run_id }}
+          aws-region: 'us-east-1'
+          audience: sts.amazonaws.com
+
+      - name: Verificar identidad
+        run: aws sts get-caller-identity
+
       - name: Prueba-acceso-aws
         run: aws s3 ls
         shell: bash
